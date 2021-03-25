@@ -1,24 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+
+import { VerticalCarousel } from './components/VerticalCarousel/VerticalCarousel'
+
+// const data = [
+//   {
+//     image: 'images/1.jpg',
+//   },
+//   {
+//     image: 'images/2.jpg'
+//   },
+//   {
+//     image: 'images/3.jpg'
+//   }
+// ]
+
+const images = [
+  {
+    id: 1, //or uuuidv4 
+    image: 'images/1.jpg',
+    section:[]
+  },
+  {
+    id: 2, 
+    image: 'images/2.jpg',
+    section:[]
+  },
+  {
+    id: 2, 
+    image: 'images/3.jpg',
+    section: [
+      {
+        id: 1,
+        image: 'images/4.jpg',
+      },
+      {
+        id: 2,
+        image: 'images/5.jpg',
+      },
+      {
+        id: 3,
+        image: 'images/6.jpg',
+      },
+    ]
+  }
+]
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <VerticalCarousel data={images} />
+    </>
   );
 }
 
