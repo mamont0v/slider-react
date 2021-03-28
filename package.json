@@ -1,7 +1,7 @@
 {
   "name": "react-slider",
   "version": "0.1.0",
-  "homepage": "http://github.com/valentinmamontov/slider-react",
+  "homepage": "http://valentinmamontov.github.io/slider-react",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
