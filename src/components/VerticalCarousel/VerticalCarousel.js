@@ -1,91 +1,108 @@
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import './VerticalCarousel.style.scss'
 export const VerticalCarousel = ({ data }) => {
-    //const getWidth = () => window.innerWidth
-    const [animationSlider, setAnimationSlider] = useState({
-        translate: 0,
-        transition: 0.45,
-        activeIndex: 0
-    })
-    
-    const { translate, transition, activeIndex } = animationSlider
-
     const length = data.length
 
-    // setAnimationSlider({ activeIndex: activeIndex === 0 ? length - 1 : activeIndex - 1 })
+    const IMG_HEIGHT = 768
+    const IMG_WIDTH = 1024
+
+    const [animationSlider, setAnimationSlider] = useState({
+        translateX: 0,
+        translateY: 0,
+        transition: 0.45,
+        activeIndexY: 0,
+        activeIndexX: 0,
+        movementX: 0,
+        movementY: 0,
+        firstTouchX:0,
+        firstTouchY:0,
+        lastTouchX:0,
+        lastTouchY:0
+    })
+
+    const { translateX, transition, activeIndexY, activeIndexX, translateY } = animationSlider
+
+    const [value, onChange] = useState(1);
+    // const [minVal, setMinVal] = useState(min);
+    // const [maxVal, setMaxVal] = useState(max);
+  
+    useEffect(() => {
+        // console.log(value)
+}, [value]);
+
+    // useEffect(() => {
+    //     console.log('events listeners here')
+    //     return () => {
+    //         console.log('removing events')
+    //     }
+    // }, [])
+
+    
     const upSlider = () => {
-        if (activeIndex === 0) {
+        if (activeIndexY === 0) {
             return setAnimationSlider({
                 ...animationSlider,
-                translate: (length - 1) * 768,
-                activeIndex: length - 1
+                activeIndexY: length - 1,
+                translateY: (length - 1) * IMG_HEIGHT
             })
         }
         setAnimationSlider({
             ...animationSlider,
-            activeIndex: activeIndex - 1,
-            translate: (activeIndex - 1) * 768
+            activeIndexY: activeIndexY - 1,
+            translateY: (activeIndexY - 1) * IMG_HEIGHT
         })
     }
 
     const downSlider = () => {
-        if (activeIndex === length - 1) {
+        if (activeIndexY === length - 1) {
             return setAnimationSlider({
                 ...animationSlider,
-                translate: 0,
-                activeIndex: 0
+                activeIndexY: 0,
+                translateY: 0
             })
         }
 
         setAnimationSlider({
             ...animationSlider,
-            activeIndex: activeIndex + 1,
-            translate: (activeIndex + 1) * 768
+            activeIndexY: activeIndexY + 1,
+            translateY: (activeIndexY + 1) * IMG_HEIGHT
         })
     }
 
     const prevSlider = () => {
-        if (activeIndex === 0) {
+        if (activeIndexX === 0) {
             return setAnimationSlider({
                 ...animationSlider,
-                translate: (length - 1) * 1024,
-                activeIndex: length - 1
+                translateX: (length - 1) * IMG_WIDTH,
+                activeIndexX: length - 1,
+
             })
         }
         setAnimationSlider({
             ...animationSlider,
-            translate: (activeIndex - 1) * 1024,
-            activeIndex: activeIndex - 1
+            translateX: (activeIndexX - 1) * IMG_WIDTH,
+            activeIndexX: activeIndexX - 1
         })
     }
 
-    // setAnimationSlider({ activeIndex: activeIndex === length - 1 ? 0 : activeIndex + 1 })
     const nextSlider = () => {
-        if (activeIndex === length - 1) {
+        if (activeIndexX === length - 1) {
             return setAnimationSlider({
                 ...animationSlider,
-                translate: 0,
-                activeIndex: 0
+                translateX: 0,
+                activeIndexX: 0
             })
         }
 
         setAnimationSlider({
             ...animationSlider,
-            activeIndex: activeIndex + 1,
-            translate: (activeIndex + 1) * 1024
+            activeIndexX: activeIndexX + 1,
+            translateX: (activeIndexX + 1) * IMG_WIDTH
         })
     }
 
-
-
-    if (!Array.isArray(data) || data.length <= 0) {
-        return <h1>NO SLIDES</h1>
-    }
+    
     const SliderCSS = {
-        // width: 100%;
-        // height: 100%;
-        //position: 'relative', //или оцентровать блок?
-        //margin: '0 auto',
         display: 'block',
         position: 'fixed',
         height: '768px',
@@ -93,75 +110,158 @@ export const VerticalCarousel = ({ data }) => {
         overflow: 'hidden'
     }
 
-    const SliderSection = {
-        display: 'flex',
-        flexDirection: 'row',
-        height: '100%',
-        width: `${1024 * length}px`,
-        overflow: 'hidden',
-        margin: 0,
-        padding: 0,
-        transform: `translateX(-${translate}px)`,
-        transition: `transform ease-out ${transition}s`,
+
+    function handleTouchStart(e){
+        setAnimationSlider({
+            ...animationSlider,
+            movementX: 0,
+            movementY:0,
+            firstTouchX: 512,
+            firstTouchY: 384,
+        })
     }
 
-    const SliderPage = {
-        display: 'flex',
-        flexDirection: 'column',
-        height: `${768 * length}px`,
-        width: `1024px`,
-        transform: `translateY(-${translate}px)`,
-        transition: `transform ease-out ${transition}s`,
+
+    function handleTouchMove(e){
+        // animationSlider.movement = e.changedTouches[0].clientX;
+        // animationSlider.firstTouchX = 0
+        setAnimationSlider({
+            ...animationSlider,
+            movementX: e.changedTouches[0].clientX - animationSlider.firstTouchX,
+            movementY:e.changedTouches[0].clientY - animationSlider.firstTouchY,
+        })
+        // console.log('movementX', animationSlider.movementX)
+        // console.log('movementY', animationSlider.movementY)
+    }
+    
+
+    function handleTouchEnd(e) {
+        if (animationSlider.movementX > 350 && animationSlider.movementX < 600) {
+           nextSlider()
+        } else if (animationSlider.movementX > -450 && animationSlider.movementX < -350) {
+            prevSlider()
+        } else {
+        }
+       
+        if (animationSlider.movementY > -300 && animationSlider.movementY < -200) {
+            upSlider()
+         } else if (animationSlider.movementY < 300 && animationSlider.movementY > 200) {
+             downSlider()
+         } else {
+         }  
+      };
+    
+    const handleInput = ({ target: { value: radius } }) => {
+        onChange(radius);
+        console.log('value',value)
+        
+        console.log('radius',radius)
+        if (radius - value > 0) {
+            nextSlider()
+        } else {
+            prevSlider()
+        }
+    }
+        
+    
+    
+    
+    
+    function handleTouchWheel(e) {
+        (e>0) ? upSlider() : downSlider()
     }
 
-    // const SliderContent2 = {
-    //     transform: `translateY(-${translate}px)`,
-    //     transition: `transform ease-out ${transition}s`,
-    //     height: `${768 * length}px`,
-    //     width: `1024px`,
-    //     display: 'flex'
-    // }
+    const rangeSlider = (
+        <div style={{ position: 'absolute' }}>
+        <div style={{
+            zIndex: '999',
+            position: 'absolute',
+            top:'663px',
+            left:'190px'
+        }}>
+            <input
+            
+            className="slider"
+                type="range"
+                min="1"
+                max="3"
+                value={value}
+                onChange={(e)=>handleInput(e)}
+            />
+            <div style={{
+                position: 'absolute',
+                top:'50%',
+                transition: '4s'
+            }}>{value}</div>
+        </div>
+    </div>
+    )
 
-    // const buttonCss = {
-    //     position:'relative',
-    //     zIndex:'3'
-    // }
+    if (!Array.isArray(data) || data.length <= 0) {
+        return <h1>NO SLIDES</h1>
+    }
 
-    {/* <div className={index === activeIndex ? 'slide active' : 'slide'} key={index}>
-                            {index === activeIndex && (
-                                <img
-                                    src={slide.image}
-                                    alt={index}
-                                />
-                            )}
-                        </div>  */}
 
     return (
-        //className="slider"
-        <div style={SliderCSS}>
-
-            <button onClick={prevSlider}>Left</button>
-            <button onClick={nextSlider}>right</button>
-            <button onClick={upSlider}>Up</button>
-            <button onClick={downSlider}>Down</button>
-
-            <div style={SliderSection}>
-                {data.map((slide, index) => {
-                    console.log('slide', slide)
-                    return (
-                        <>
-                            <img
-                                // style={{
-                                // width:'100%'
-                                // }}
-                                src={slide.image}
-                                alt={index}
-                            />
-                        </>
-                    )
-                })}
+        <>
+        {console.log(animationSlider.activeIndexY)}
+        {animationSlider.activeIndexY === 2 ? rangeSlider : null}
+        <div style={SliderCSS}
+            onWheel={(e)=>handleTouchWheel(e.deltaY)}
+            onTouchStart={(e)=>handleTouchStart(e)}
+            onTouchMove={(e)=>handleTouchMove(e)}
+            onTouchEnd={(e)=>handleTouchEnd(e)}
+            
+           
+        >
+            {/* <div style={{ position: 'absolute', zIndex: '3' }}>
+                <button onClick={upSlider}>Up</button>
+                <button onClick={downSlider}>Down</button>
             </div>
-        </div>
+            <div style={{ position: 'absolute', zIndex: '3', right: '20px' }}>
+                <button onClick={prevSlider}>Prev</button>
+                <button onClick={nextSlider}>Next</button>
+            </div> */}
+            
+            {data.map((slide, i) => {
+                
+                return (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        transform: `translateY(-${translateY}px)`,
+                        transition: `transform ease-out ${transition}s`,
+                        backgroundImage: `url(${slide.image})`,
+                        width: '100%',
+                        height: '768px',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}>
+                        {slide.image.map(el => {
+                            return (
 
+                                <div style={{
+                                    display: 'flex',
+                                    flex: '1 0 100%',
+                                    flexDirection: 'column',
+                                    transform: `translateX(-${translateX}px)`,
+                                    transition: `transform ease-out ${transition}s`,
+                                    backgroundImage: `url(${el})`,
+                                    width: '100%',
+                                    height: '768px',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center'
+                                }}>
+                                  
+                                </div>
+                            )
+                        })}
+                    </div>
+                )
+            })}
+        </div>
+        </>
     )
 }
