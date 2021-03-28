@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/valentinmamontov/slider-react/static/css/main.36266491.chunk.css",
-    "main.js": "/valentinmamontov/slider-react/static/js/main.72f7456c.chunk.js",
-    "main.js.map": "/valentinmamontov/slider-react/static/js/main.72f7456c.chunk.js.map",
-    "runtime-main.js": "/valentinmamontov/slider-react/static/js/runtime-main.32a27402.js",
-    "runtime-main.js.map": "/valentinmamontov/slider-react/static/js/runtime-main.32a27402.js.map",
-    "static/js/2.b38c3002.chunk.js": "/valentinmamontov/slider-react/static/js/2.b38c3002.chunk.js",
-    "static/js/2.b38c3002.chunk.js.map": "/valentinmamontov/slider-react/static/js/2.b38c3002.chunk.js.map",
-    "index.html": "/valentinmamontov/slider-react/index.html",
-    "static/css/main.36266491.chunk.css.map": "/valentinmamontov/slider-react/static/css/main.36266491.chunk.css.map",
-    "static/js/2.b38c3002.chunk.js.LICENSE.txt": "/valentinmamontov/slider-react/static/js/2.b38c3002.chunk.js.LICENSE.txt"
+    "main.css": "/slider-react/static/css/main.36266491.chunk.css",
+    "main.js": "/slider-react/static/js/main.72f7456c.chunk.js",
+    "main.js.map": "/slider-react/static/js/main.72f7456c.chunk.js.map",
+    "runtime-main.js": "/slider-react/static/js/runtime-main.651c05cc.js",
+    "runtime-main.js.map": "/slider-react/static/js/runtime-main.651c05cc.js.map",
+    "static/js/2.b38c3002.chunk.js": "/slider-react/static/js/2.b38c3002.chunk.js",
+    "static/js/2.b38c3002.chunk.js.map": "/slider-react/static/js/2.b38c3002.chunk.js.map",
+    "index.html": "/slider-react/index.html",
+    "static/css/main.36266491.chunk.css.map": "/slider-react/static/css/main.36266491.chunk.css.map",
+    "static/js/2.b38c3002.chunk.js.LICENSE.txt": "/slider-react/static/js/2.b38c3002.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.32a27402.js",
+    "static/js/runtime-main.651c05cc.js",
     "static/js/2.b38c3002.chunk.js",
     "static/css/main.36266491.chunk.css",
     "static/js/main.72f7456c.chunk.js"
